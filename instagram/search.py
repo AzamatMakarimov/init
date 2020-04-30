@@ -44,7 +44,6 @@ def one(all_acc, acc, login, password):
         browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", element)
 
         if num_scroll % 15 == 0:
-            print("!")
             # сохранение пользователей в массив
             persons = browser.find_elements_by_xpath("//div[@role='dialog']/div[2]/ul/div/li/div/div/div/div/a[@title]")
             for i in range(len(persons)):
@@ -53,7 +52,6 @@ def one(all_acc, acc, login, password):
 
         # ожидание
         if (len(pers) > (2000 + 1000 * p)):
-            print("\n ожидание 10 мин")
             time.sleep(60 * 10)
             p += 1
 

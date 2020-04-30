@@ -1,6 +1,6 @@
 from selenium import webdriver
 import time
-from datetime import timedelta, datetime
+from datetime import datetime
 import re
 
 # исключения
@@ -43,53 +43,44 @@ def two(days, acc_subscriptions, publications):
         if xpath_existence(element) == 1:
             try:
                 if browser.find_element_by_xpath(element).text == "This Account is Private" or "Это закрытый аккаунт":
-                    print(j, "Приватный аккаунт")
                     continue
             except StaleElementReferenceException:
-                print("Ошибка, код ошибки: 1")
+                xxx = 0
 
         # проверка на допустимое число подписок
         element = "//section/main/div/header/section/ul/li[3]/a/span"
         if xpath_existence(element) == 0:
-            print(j, "Ошибка, код ошибки: 2")
             continue
         status = browser.find_element_by_xpath(element).text
         status = re.sub(r'\s', '', status) # удаление пробелов из числа подписок
         if int(status) > acc_subscriptions:
-            print(j, "У аккаунта слишком много подписок")
             continue
 
         # не должно быть ссылки на сайт //section/main/div/header/section/div[2]
         element = "//section/main/div/header/section/div[2]/span/a"
         if xpath_existence(element) == 1:
-            print(j, "Есть ссылка на сайт")
             continue
 
         # проверка на минимум публикаций
         element = "//section/main/div/header/section/ul/li[1]/a/span"
         if xpath_existence(element) == 0:
-            print(j, "Ошибка, код ошибки: 4")
             continue
         status = browser.find_element_by_xpath(element).text
         status = re.sub(r'\s', '', status)  # удаление пробелов из числа публикаций
         if int(status) < publications:
-            print(j, "У аккаунта слишком мало публикаций")
             continue
 
         #  проверка на наличие аватарки
         element = "//section/main/div/header/div/div/span/img"
         if xpath_existence(element) == 0:
-            print(j, "Ошибка, код ошибки: 5")
             continue
         status = browser.find_element_by_xpath(element).get_attribute("src")
         if status.find("s150x150") == 1:
-            print(j, "Профиль без аватарки")
             continue
 
         # проверка на дату последней публикации
         element = "//a[contains(@href, '/p')]"
-        if xpath_existence(element) ==0:
-            print(j, "Ошибка, код ошибки: 6")
+        if xpath_existence(element) == 0:
             continue
         status = browser.find_element_by_xpath(element).get_attribute('href')
         browser.get(status)
@@ -100,22 +91,21 @@ def two(days, acc_subscriptions, publications):
         post_date = datetime(year, month, day)
         period = today - post_date
         if period.days > days:
-            print(j, "Последняя публикация была слишком давно")
             continue
 
         # Добавление пользователя в отфильтрованный список
         filtered_list.append(person)
-        print(j, "Добавлен новый пользователь")
         i += 1
         if i > 10:
             break
+
     f = open("filtered_persons_list.txt", "w")
     for line in filtered_list:
         f.write(line)
     f.close()
-    print("\n Добавленно", i, "Пользователей")
 
     # очистка файла неотфильтрованного списка
     f = open("persons_list.txt", "w")
     f.close()
+    # выход
     browser.quit()

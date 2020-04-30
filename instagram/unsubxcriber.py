@@ -43,61 +43,39 @@ f.close()
 i = 0 # количество людей от которых мы отписались
 for line in file_list:
 
-    """# очистка пользователя в моих подписок
-    f = open("my_subscriptions.txt", "r")
-    r = 1
-    text = set()
-    while True:
-        try:
-            text.add(f.readline(r))
-        except Exception:
-            f.close()
-            break
-    text.remove(line)
-    with open("my_subscriptions.txt", "w") as f:
-        for w in text:
-            f.writelines(w)"""
-
     i += 1
     if max != 0 and i == max + 1:
         break
     browser.get(line)
     element = "//section/main/div/header/section/div[1]/div[2]/span/span[1]/button"
     if xpath_existence(element) == 0:
-        print("Ошибка 1 поиска кнопки отписки, либо вы не подписаны на аккаунт")
         continue
 
     try:
         button = browser.find_element_by_xpath(element)
     except StaleElementReferenceException:
-        print("Ошибк 2 поиска кнопки отписки")
         continue
 
     if button.text != "Подписаться":
         try:
             button.click()
         except StaleElementReferenceException:
-            print("Ошибка 3 нажатия кнопки отписки")
             continue
 
     if button.text == "Подписаться":
-        print("вы уже подписаны на", line)
         continue
     time.sleep(1.3)
 
     element = "//div[4]/div/div/div[3]/button[1]"
     if xpath_existence(element) == 0:
-        print("Ошибка 4 поиска кнопки отписки")
         continue
 
     button = browser.find_element_by_xpath(element)
     try:
         button.click()
     except StaleElementReferenceException:
-        print("Ошибка:5 нажатия кнопки")
         continue
-        
-    print("Произвелась отписка от", line)
+
     time.sleep(unsub_time)
 
 # завершение работы

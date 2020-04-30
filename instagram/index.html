@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instagram bot</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<form action="/instagram" method="post">
+   <ul id="input">
+    <li><input type="login" name="login"></li>
+    <li><input type="password" name="password"></li>
+    <li><input type="text" name="acc"></li>
+    <li><input type="text" name="all_acc"></li>
+    <br><br>
+    <li><input type="text" name="days"></li>
+    <li><input type="text" name="acc_subscriptions"></li>
+    <li><input type="text" name="publications"></li>
+    <li><input type="text" name="like_time"></li>
+    <li><input type="text" name="all_likes"></li>
+    <li><input type="text" name="all_subscriptions"></li>
+    <li><input type="text" name="hour_like"></li>
+    <li><input type="text" name="hour_sub"></li>
+    <li><input type="text" name="z_likes"></li>
+    <br><br>
+    <li><input type="text" name="unsub_time"></li>
+    <li><input type="text" name="max_unsub"></li>
+   </ul>
+   <p id="one">Параметры подписок</p>
+   <p id="two">Параметры отписок</p>
+   <ul id="text">
+    <li>Login: </li>
+    <li>Password: </li>
+    <li>Аккаунт у которых мы берем подписчиков(ссылка): </li>
+    <li>Общее количество пользователей: </li>
+       <br><br>
+    <li>Количество допустимых дней с момена последней публикации: </li>
+    <li>Количество допустимых подписок у аккаунта:</li>
+    <li>Необходимый минимум публикаций: </li>
+    <li>Время между лайками: </li>
+    <li>Лимит лайков за сутки: </li>
+    <li>Лимит подписок за сутки: </li>
+    <li>Максимальное число лаков за час: </li>
+    <li>Максимальное число подписок за час: </li>
+    <li>Количество лайков которые мы ставим пользователю: </li>
+    <br><br>
+    <li>Время между отписками: </li>
+    <li>Количество отписок: </li>
+    </ul>
+    <input id="run" type="submit" value="Запустить">
+</form>
+</body>
+</html>
